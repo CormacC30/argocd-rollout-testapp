@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: error-app-rollout
+  namespace: default
+spec:
+  replicas: 3
+  strategy:
+    canary:
+      steps: 
+        - setWeight: 20
+        - pause: { duration: 30s }
+        - setWeight: 50
+        - pause: { duration: 30s }
+        - setWeight: 100
+  selector:
+    matchLabels:
+      app: error-app
+  template:
+    metadata:
+      labels: 
+        app: error-app
+    spec:
+      containers:
+        - name: error-app
+          image: quay.io/rhn-support-ccostell/test-training/error-app:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            
