@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: error-app-rollout
-  namespace: default
+  namespace: argotestapp
 spec:
   replicas: 3
   strategy:
@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: error-app
-          image: quay.io/rhn-support-ccostell/test-training/error-app:v2
+          image: quay.io/rhn-support-ccostell/test-training/error-app:v3
           ports:
             - containerPort: 8080
           readinessProbe:

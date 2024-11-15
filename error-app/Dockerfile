@@ -1,6 +1,6 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 WORKDIR /app
-COPY logging.py /app/app.py
+COPY logging.py /app/logging.py
 RUN pip install Flask
 EXPOSE 8080
-CMD ["python", "app.py"]
+CMD ["python", "logging.py"]
