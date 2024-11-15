@@ -7,8 +7,8 @@ spec:
   metrics:
     - name: error-rate
       interval: 30s
-      successCondition: result[0] < 0.05
-      failureCondition: result[0] >= 0.05
+      successCondition: len(result) == 0 || result[0] >= 0.95
+      failureCondition: result[0] < 0.05
       provider:
         prometheus:
           address: https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091
