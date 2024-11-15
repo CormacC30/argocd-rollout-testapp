@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: error-rate-analysis
+  namespace: argo-rollouts
+spec:
+  metrics:
+    - name: error-rate
+      interval: 30s
+      successCondition: result[0] < 0.05
+      failureCondition: result[0] >= 0.05
+      provider:
+        prometheus:
+          address: https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091
+          query: |
+            sum(rate(http_requests_total{status=~"5.."}[1m])) /
+            sum(rate(http_requests_total[1m]))

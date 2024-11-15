@@ -9,8 +9,14 @@ spec:
     canary:
       steps: 
         - setWeight: 20
+        - analysis:
+            templates:
+              - templateName: error-rate-analysis
         - pause: { duration: 30s }
         - setWeight: 50
+        - analysis:
+            templates:
+              - templateName: error-rate-analysis
         - pause: { duration: 30s }
         - setWeight: 100
   selector:
@@ -23,7 +29,7 @@ spec:
     spec:
       containers:
         - name: error-app
-          image: quay.io/rhn-support-ccostell/test-training/error-app:v4
+          image: quay.io/rhn-support-ccostell/test-training/healthy-app:v7 # error prone: quay.io/rhn-support-ccostell/test-training/error-app:v4 # healthy app: quay.io/rhn-support-ccostell/test-training/healthy-app:v7 
           ports:
             - containerPort: 8080
           readinessProbe:
