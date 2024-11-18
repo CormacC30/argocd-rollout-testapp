@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argo-rollouts-namespace-role
+  namespace: argotestapp
+rules:
+  - apiGroups: ["argoproj.io"]
+    resources: ["analysisruns", "experiments"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["pods", "events", "secrets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
