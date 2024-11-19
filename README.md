@@ -6,6 +6,14 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
 
 - Apply each of the YAML manifests to enable all the correct roles and rolebindings using `oc apply -f <filename>`
 
+- Generate the Prometheus token:
+
+  `oc create token prometheus-k8s -n openshift-monitoring` 
+
+- Create the secret in argo-rollouts namespace using token created above
+
+  `oc create secret generic prometheus-token --from-literal=token=<TOKEN> -n argo-rollouts`
+
 - The "healthy" app (which generates 200 status code) can has the following image: 
 
   `quay.io/rhn-support-ccostell/test-training/healthy-app:v7`
