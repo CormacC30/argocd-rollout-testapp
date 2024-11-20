@@ -21,6 +21,9 @@ spec:
         - name: argo-rollouts
           image: quay.io/argoproj/argo-rollouts:v1.7.2
           imagePullPolicy: Always
+          args:
+            - '--prometheus-address=https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091'
+            - --log-level=debug
           ports:
             - name: metrics
               containerPort: 8090
@@ -34,8 +37,6 @@ spec:
                 secretKeyRef:
                   name: prometheus-token
                   key: token
-          args:
-            - --log-level=debug
           readinessProbe:
             httpGet:
               path: /metrics
@@ -56,4 +57,12 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 3
+          volumeMounts:
+            - name: prometheus-token
+              mountPath: /etc/prometheus
+              readOnly: true
+      volumes:
+        - name: prometheus-token
+          secret:
+            secretName: prometheus-token
       dnsPolicy: ClusterFirst
