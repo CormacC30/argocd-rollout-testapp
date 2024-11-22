@@ -12,7 +12,7 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
 
    - Adjust namespace field in each yaml file to desired project you wish to deploy in (if required) 
 
-#  NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prometheus-rolebinding.yaml` unchanged 
+NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prometheus-rolebinding.yaml` unchanged 
 
 2. Install Argo Rollouts controller
 
