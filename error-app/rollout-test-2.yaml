@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: error-app-rollout
-  namespace: argotestapp
+  namespace: argo-rollouts # argotestapp
 spec:
   replicas: 3
   strategy:

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: error-app-service
-  namespace: argotestapp
+  namespace: argo-rollouts # argotestapp
 spec:
   selector:
     app: error-app
