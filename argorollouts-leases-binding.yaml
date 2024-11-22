@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: argo-rollouts-leases-binding
-  namespace: argotestapp
+  namespace: argo-rollouts # argotestapp
 subjects:
   - kind: ServiceAccount
     name: argo-rollouts

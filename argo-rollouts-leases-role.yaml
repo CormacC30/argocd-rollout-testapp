@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: argo-rollouts-leases
-  namespace: argotestapp
+  namespace: argo-rollouts # argotestapp
 rules:
   - apiGroups: ["coordination.k8s.io"]
     resources: ["leases"]
