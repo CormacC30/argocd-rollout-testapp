@@ -6,7 +6,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: argo-rollouts
-    namespace: argotestapp
+    namespace: argo-rollouts # argotestapp
 roleRef:
   kind: Role
   name: argo-rollouts-namespace-role
@@ -19,7 +19,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: argo-rollouts
-    namespace: argotestapp
+    namespace: argo-rollouts # argotestapp
 roleRef:
   kind: ClusterRole
   name: argo-rollouts-cluster-role

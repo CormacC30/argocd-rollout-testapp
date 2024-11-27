@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: error-app
-          image: quay.io/rhn-support-ccostell/test-training/error-app:v4 # error prone: quay.io/rhn-support-ccostell/test-training/error-app:v4 # healthy app: quay.io/rhn-support-ccostell/test-training/healthy-app:v7 
+          image: quay.io/rhn-support-ccostell/test-training/healthy-app:v7  # error prone: quay.io/rhn-support-ccostell/test-training/error-app:v4 # healthy app: quay.io/rhn-support-ccostell/test-training/healthy-app:v7 
           ports:
             - containerPort: 8080
           readinessProbe:

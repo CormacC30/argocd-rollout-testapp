@@ -6,7 +6,7 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
 
 1. Clone repository
 
-2. - Create `argo-rollouts` namespace: `$ oc new-project argo-rollouts` 
+2. - Create `argo-rollouts` namespace: `oc new-project argo-rollouts` 
      
      OR
 
@@ -14,9 +14,26 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
 
 NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prometheus-rolebinding.yaml` unchanged 
 
-2. Install Argo Rollouts controller
+2. Ensure OpenShift GitOps operator is installed (logged as cluster administrator) you can do so by using the documentation below:
 
- `$ oc apply -f https://raw.githubusercontent.com/argoproj/argo-rollouts/v1.7.2/manifests/install.yaml -n argo-rollouts` 
+   https://docs.openshift.com/gitops/1.13/installing_gitops/installing-openshift-gitops.html#installing-openshift-gitops
+
+   This can be done using web console OR if using the CLI:
+   The required esources are already available in the "gitops-operator" directory. To install:
+   - Run:
+
+    ```
+    cd gitops-operator 
+    oc create ns openshift-gitops-operator
+    ``` 
+
+   - Enable cluster monitoring on openshift-gitops-operator namespace or any namespace it is required on:
+     `oc label namespace <namespace> openshift.io/cluster-monitoring=true`
+   - Apply resources to install operator: 
+     `oc apply -f `
+   
+   Check if all pods ar running successfully and `$ cd .. ` to parent directory
+
 
 3. Ensure that the prometheus address is correct: Check prometheus-k8s service TCP port number `oc get svc prometheus-k8s -n openshift-monitoring` 
 

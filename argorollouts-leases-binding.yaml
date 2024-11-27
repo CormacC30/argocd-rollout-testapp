@@ -6,7 +6,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: argo-rollouts
-    namespace: argotestapp
+    namespace: argo-rollouts #argotestapp
 roleRef:
   kind: Role
   name: argo-rollouts-leases
