@@ -30,7 +30,14 @@ NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prome
    - Enable cluster monitoring on openshift-gitops-operator namespace or any namespace it is required on:
      `oc label namespace <namespace> openshift.io/cluster-monitoring=true`
    - Apply resources to install operator: 
-     `oc apply -f `
+     `oc apply -f gitops-operator-group.yaml`
+  
+   - For a namespace-scoped argo rollouts installation:
+    https://docs.openshift.com/gitops/1.14/argo_rollouts/enable-support-for-namespace-scoped-argo-rollouts-installation.html
+
+     Set
+     `oc apply -f subscription.yaml` 
+     `oc apply -f rollout-manager.yaml`
    
    Check if all pods ar running successfully and `$ cd .. ` to parent directory
 
@@ -39,13 +46,23 @@ NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prome
 
    And in analysisTemplate.yaml replace port number in `https://prometheus-k8s.openshift-monitoring.svc.cluster.local:<TCP port number>`
 
+
+   Ensure prometheus TLS certificate is configured correctly, if using custom certificate
+
+  ```
+  oc create configmap prometheus-ca-cert \
+  --from-file=ca.crt=/path/to/ca.crt \
+  -n argo-rollouts
+  ```
+
+
 4. Apply each of the YAML manifests `oc apply -f .`
 
 - Generate the Prometheus token:
 
   `oc create token prometheus-k8s -n openshift-monitoring` 
 
-- Create the secret in argo-rollouts namespace using token created above
+- Create the secret in argo-rollouts namespace (or whichever namespace you are running the rollout in) using token created above
 
   `oc create secret generic prometheus-token --from-literal=token=<TOKEN> -n argo-rollouts`
 
@@ -59,4 +76,4 @@ NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prome
 
 5. Replace the desired image (healthy or error prone above) in the .spec section of rollout.yaml for the app that is desired to be rolled out.
 
-6. The status of the rollout can be monitored using `$ kubectl argo rollouts get rollout error-app-rollout --watch`
+6. The status of the rollout can be monitored using `$ oc argo rollouts get rollout error-app-rollout --watch`

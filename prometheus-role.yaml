@@ -4,6 +4,12 @@ metadata:
   name: prometheus-api-access
   namespace: openshift-monitoring
 rules:
-  - apiGroups: [""]
-    resources: ["services", "endpoints"]
-    verbs: ["get", "list", "watch"]
+  - apiGroups: 
+    - ""
+    resources: 
+    - "services"
+    - "endpoints"
+    verbs: 
+    - "get"
+    - "list"
+    - "watch"

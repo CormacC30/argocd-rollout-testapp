@@ -19,11 +19,11 @@ spec:
       serviceAccountName: argo-rollouts
       containers:
         - name: argo-rollouts
-          image: quay.io/argoproj/argo-rollouts:v1.7.2
+          image: quay.io/argoproj/argo-rollouts:latest
           imagePullPolicy: Always
-          args:
-            - '--prometheus-address=https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091'
-            - --log-level=debug
+        #  args:
+        #    - --prometheus-address=https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091
+        #    - --log-level=debug
           ports:
             - name: metrics
               containerPort: 8090
@@ -61,8 +61,17 @@ spec:
             - name: prometheus-token
               mountPath: /etc/prometheus
               readOnly: true
+            - mountPath: /etc/prometheus-ca
+              name: prometheus-ca-cert
+              readonly: true
+          args:
+            - --metrics-endpoint=https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091
+            - --ca-cert-path=/etc/prometheus-ca/ca.crt
       volumes:
         - name: prometheus-token
           secret:
             secretName: prometheus-token
+        - name: prometheus-ca-cert
+          configMap:
+            name: prometheus-ca-cert
       dnsPolicy: ClusterFirst

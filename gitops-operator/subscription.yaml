@@ -9,7 +9,8 @@ spec:
   name: openshift-gitops-operator 
   source: redhat-operators 
   sourceNamespace: openshift-marketplace 
+  startingCSV: openshift-gitops-operator.v1.14.2
   config:
     env:
-      - name: CLUSTER_SCOPED_ARGO_ROLLOUTS_NAMESPACES
-        value: "openshift-gitops,argo-rollouts"
+      - name: NAMESPACE_SCOPED_ARGO_ROLLOUTS
+        value: 'true'
