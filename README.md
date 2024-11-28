@@ -47,11 +47,11 @@ NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prome
    And in analysisTemplate.yaml replace port number in `https://prometheus-k8s.openshift-monitoring.svc.cluster.local:<TCP port number>`
 
 
-   Ensure prometheus TLS certificate is configured correctly, if using custom certificate
+   Ensure prometheus TLS certificate is configured correctly if a using a custom certificate, ensure to change the path to the path of your certificate chain
 
   ```
   oc create configmap prometheus-ca-cert \
-  --from-file=ca.crt=/path/to/ca.crt \
+  --from-file=ca.crt=</path/to/ca.crt> \
   -n argo-rollouts
   ```
 
