@@ -1,8 +1,8 @@
-# A test application to demo canary deployments in a test environment
+# A sample user application to demo canary deployments in a test environment
 
 This is a simple application that runs in an OpenShift Cluster, to test Argo Rollouts canary deployments
 
-# Set up
+## Set up
 
 1. Clone repository
 
