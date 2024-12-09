@@ -4,9 +4,9 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
 
 ## Set up
 
-1. Clone repository
+1. Clone repository: `git clone https://github.com/CormacC30/argocd-rollout-testapp` 
 
-2. - Create `argo-rollouts` namespace: `oc new-project argo-rollouts` 
+2. - Create argo-rollouts namespace: `oc new-project argo-rollouts` 
      
      OR
 
