@@ -1,10 +1,28 @@
-kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
 metadata:
-  name: prometheus-api-access
+  name: prometheus-namespace-reader
 rules:
-  - nonResourceURLs:
-      - "/api/v1/query"
-      - "/api/v1/query_range"
-    verbs:
-      - get
+- apiGroups: [""]
+  resources: ["services", "endpoints", "pods"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["monitoring.coreos.com"]
+  resources: ["prometheuses"]
+  verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus-namespace-reader
+subjects:
+- kind: ServiceAccount
+  name: prometheus-k8s
+  namespace: openshift-monitoring
+roleRef:
+  kind: ClusterRole
+  name: prometheus-namespace-reader
+  apiGroup: rbac.authorization.k8s.io

@@ -16,8 +16,3 @@ spec:
           insecureSkipVerify: true
           tlsConfig:
             caFile: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
-            certFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-            keyFile: /var/run/secrets/kubernetes.io/serviceaccount/token
-          query: |
-            sum(rate(http_requests_total{status=~"5.."}[1m])) /
-            sum(rate(http_requests_total[1m]))

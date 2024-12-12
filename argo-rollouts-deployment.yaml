@@ -28,12 +28,6 @@ spec:
             - name: healthz
               containerPort: 8080
               protocol: TCP
-          env:
-            - name: PROMETHEUS_BEARER_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: prometheus-token
-                  key: token
           readinessProbe:
             httpGet:
               path: /metrics
@@ -54,21 +48,7 @@ spec:
             periodSeconds: 20
             successThreshold: 1
             failureThreshold: 3
-          volumeMounts:
-            - name: prometheus-token
-              mountPath: /etc/prometheus
-              readOnly: true
-            - mountPath: /etc/prometheus-ca
-              name: prometheus-ca-cert
-              readonly: true
           args:
             - --metrics-endpoint=https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091
-            - --ca-cert-path="/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
-      volumes:
-        - name: prometheus-token
-          secret:
-            secretName: prometheus-token
-        - name: prometheus-ca-cert
-          configMap:
-            name: prometheus-ca-cert
+            - --ca-cert-path=/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
       dnsPolicy: ClusterFirst
