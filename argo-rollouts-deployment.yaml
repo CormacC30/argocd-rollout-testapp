@@ -21,9 +21,6 @@ spec:
         - name: argo-rollouts
           image: quay.io/argoproj/argo-rollouts:latest
           imagePullPolicy: Always
-        #  args:
-        #    - --prometheus-address=https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091
-        #    - --log-level=debug
           ports:
             - name: metrics
               containerPort: 8090
@@ -66,7 +63,7 @@ spec:
               readonly: true
           args:
             - --metrics-endpoint=https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091
-            - --ca-cert-path=/etc/prometheus-ca/ca.crt
+            - --ca-cert-path="/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
       volumes:
         - name: prometheus-token
           secret:

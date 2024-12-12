@@ -18,19 +18,25 @@ NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prome
 
    https://docs.openshift.com/gitops/1.13/installing_gitops/installing-openshift-gitops.html#installing-openshift-gitops
 
-   This can be done using web console OR if using the CLI:
-   The required esources are already available in the "gitops-operator" directory. To install:
    - Run:
 
     ```
     cd gitops-operator 
-    oc create ns openshift-gitops-operator
+
+
     ``` 
 
    - Enable cluster monitoring on openshift-gitops-operator namespace or any namespace it is required on:
-     `oc label namespace <namespace> openshift.io/cluster-monitoring=true`
+
+     ```
+     oc label namespace <namespace> openshift.io/cluster-monitoring=true
+     ```
+
    - Apply resources to install operator: 
-     `oc apply -f gitops-operator-group.yaml`
+
+     ```
+     oc apply -f gitops-operator-group.yaml
+     ```
   
    - For a namespace-scoped argo rollouts installation:
     https://docs.openshift.com/gitops/1.14/argo_rollouts/enable-support-for-namespace-scoped-argo-rollouts-installation.html
@@ -56,7 +62,7 @@ NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prome
   ```
 
 
-4. Apply each of the YAML manifests `oc apply -f .`
+4. In **argo-rollouts-testapp root directory**,  apply each of the YAML manifests `oc apply -f .`
 
 - Generate the Prometheus token:
 

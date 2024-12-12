@@ -13,4 +13,4 @@ spec:
   config:
     env:
       - name: NAMESPACE_SCOPED_ARGO_ROLLOUTS
-        value: 'true'
+        value: "true"

@@ -1,0 +1,10 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: prometheus-api-access
+rules:
+  - nonResourceURLs:
+      - "/api/v1/query"
+      - "/api/v1/query_range"
+    verbs:
+      - get
