@@ -48,7 +48,7 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
    Run the following commands:
 
 ```
-PROMETHEUS_ADDRESS=$(oc get route thanos-querier -n openshift-monitoring -o jsonpath='{.spec.host}')
+oc get route thanos-querier -n openshift-monitoring -o jsonpath='{.spec.host}'
 ```
 
 Replace the prometheus addres in analysisTemplate in .spec.metrics.provider.prometheus.address 
