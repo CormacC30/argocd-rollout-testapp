@@ -51,7 +51,7 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
 oc get route thanos-querier -n openshift-monitoring -o jsonpath='{.spec.host}'
 ```
 
-Replace the prometheus addres in analysisTemplate in .spec.metrics.provider.prometheus.address 
+Replace the prometheus addres in `analysisTemplate.yaml` in `.spec.metrics.provider.prometheus.address`
 
 4. In **argo-rollouts-testapp root directory**,  apply each of the YAML manifests `oc apply -f .`
 
