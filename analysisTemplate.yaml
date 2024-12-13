@@ -4,15 +4,24 @@ metadata:
   name: error-rate-analysis
   namespace: argo-rollouts
 spec:
+  args:
+    - name: api-token
+      valueFrom:
+        secretKeyRef:
+          key: token
+          name: argo-rollouts-token
   metrics:
-    - name: error-rate
+    - name: error-rate-analysis
       interval: 30s
       count: 5
       successCondition: len(result) == 0 || result[0] >= 0.95
       failureCondition: result[0] < 0.05
       provider:
         prometheus:
-          address: https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091
-          insecureSkipVerify: true
-          tlsConfig:
-            caFile: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
+          address: 'https://thanos-querier-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com' # 'https://prometheus-k8s-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com' # 'https://thanos-querier-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com'
+          insecure: true
+          headers:
+            - key: Authorization
+              value: 'Bearer {{args.api-token}}'
+          query: |
+            sum(rate(http_requests_total[1m]))
