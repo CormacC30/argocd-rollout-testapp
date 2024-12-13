@@ -10,9 +10,7 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
      
      OR
 
-   - Adjust namespace field in each yaml file to desired project you wish to deploy in (if required) 
-
-NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prometheus-rolebinding.yaml` unchanged 
+   - Adjust namespace "argo-rollouts" to your desired namespace
 
 2. Ensure OpenShift GitOps operator is installed (logged as cluster administrator) you can do so by using the documentation below:
 
@@ -22,7 +20,6 @@ NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prome
 
     ```
     cd gitops-operator 
-
 
     ``` 
 
@@ -47,30 +44,16 @@ NOTE: leave `argo-rollouts-cluster-role.yaml`, `prometheus-role.yaml` and `prome
    
    Check if all pods ar running successfully and `$ cd .. ` to parent directory
 
+3. In analysis template change the prometheus query address to one for the required environment.
+   Run the following commands:
 
-3. Ensure that the prometheus address is correct: Check prometheus-k8s service TCP port number `oc get svc prometheus-k8s -n openshift-monitoring` 
+```
+PROMETHEUS_ADDRESS=$(oc get route thanos-querier -n openshift-monitoring -o jsonpath='{.spec.host}')
+```
 
-   And in analysisTemplate.yaml replace port number in `https://prometheus-k8s.openshift-monitoring.svc.cluster.local:<TCP port number>`
-
-
-   Ensure prometheus TLS certificate is configured correctly if a using a custom certificate, ensure to change the path to the path of your certificate chain
-
-  ```
-  oc create configmap prometheus-ca-cert \
-  --from-file=ca.crt=</path/to/ca.crt> \
-  -n argo-rollouts
-  ```
-
+Replace the prometheus addres in analysisTemplate in .spec.metrics.provider.prometheus.address 
 
 4. In **argo-rollouts-testapp root directory**,  apply each of the YAML manifests `oc apply -f .`
-
-- Generate the Prometheus token:
-
-  `oc create token prometheus-k8s -n openshift-monitoring` 
-
-- Create the secret in argo-rollouts namespace (or whichever namespace you are running the rollout in) using token created above
-
-  `oc create secret generic prometheus-token --from-literal=token=<TOKEN> -n argo-rollouts`
 
 - The "healthy" app (which generates 200 status code) can has the following image: 
 

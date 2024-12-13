@@ -18,8 +18,8 @@ spec:
       failureCondition: result[0] < 0.05
       provider:
         prometheus:
-          address: 'https://thanos-querier-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com' # 'https://prometheus-k8s-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com' # 'https://thanos-querier-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com'
-          insecure: true
+          address: 'https://thanos-querier-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com' # REPLACE
+          insecure: true # 
           headers:
             - key: Authorization
               value: 'Bearer {{args.api-token}}'
