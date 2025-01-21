@@ -63,6 +63,12 @@ Replace the prometheus addres in `analysisTemplate.yaml` in `.spec.metrics.provi
 
   `quay.io/rhn-support-ccostell/test-training/error-app:v4`
 
-5. Replace the desired image (healthy or error prone above) in the .spec section of rollout.yaml for the app that is desired to be rolled out.
+5. Grant permissions for the argo-rollouts Service Account to query Prometheus:
+   
+   ```
+   oc adm policy add-cluster-role-to-user cluster-monitoring-view user
+   ```
+   
+7. Replace the desired image (healthy or error prone above) in the .spec section of rollout.yaml for the app that is desired to be rolled out.
 
-6. The status of the rollout can be monitored using `$ oc argo rollouts get rollout error-app-rollout --watch`
+8. The status of the rollout can be monitored using `$ oc argo rollouts get rollout error-app-rollout --watch`
