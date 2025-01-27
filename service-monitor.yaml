@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: error-app-monitor
+  name: error-app-monitor
+  namespace: argo-rollouts
+spec:
+  endpoints:
+  - interval: 30s
+    port: metrics # web
+    scheme: http
+  selector:
+    matchLabels:
+      app: error-app
+
+---
+
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   labels:
+#     k8s-app: healthy-app-monitor
+#   name: healthy-app-monitor
+#   namespace: argo-rollouts
+# spec:
+#   endpoints:
+#   - interval: 30s
+#     port: web
+#     scheme: http
+#   selector:
+#     matchLabels:
+#       app: healthy-app

@@ -18,7 +18,9 @@ spec:
       failureCondition: result[0] < 0.05
       provider:
         prometheus:
-          address: 'https://thanos-querier-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com' # REPLACE
+          address: 'https://thanos-querier-openshift-monitoring.apps.argotest.lab.psi.pnq2.redhat.com' # REPLACE
+          authentication:
+            sigv4: {}
           insecure: true # 
           headers:
             - key: Authorization
