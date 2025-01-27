@@ -5,23 +5,25 @@ metadata:
   namespace: argo-rollouts
 spec:
   args:
-    - name: api-token
-      valueFrom:
-        secretKeyRef:
-          key: token
-          name: argo-rollouts-token
+  - name: api-token
+    valueFrom:
+      secretKeyRef:
+        key: token
+        name: argo-rollouts-token
   metrics:
-    - name: error-rate-analysis
-      interval: 30s
-      count: 5
-      successCondition: len(result) == 0 || result[0] >= 0.95
-      failureCondition: result[0] < 0.05
-      provider:
-        prometheus:
-          address: 'https://thanos-querier-openshift-monitoring.apps.sandboxcluster3.lab.upshift.rdu2.redhat.com' # REPLACE
-          insecure: true # 
-          headers:
-            - key: Authorization
-              value: 'Bearer {{args.api-token}}'
-          query: |
-            sum(rate(http_requests_total[1m]))
+  - count: 5
+    failureCondition: result[0] < 0.05
+    interval: 30s
+    name: error-rate-analysis
+    provider:
+      prometheus:
+        address: https://thanos-querier-openshift-monitoring.apps.argotest.lab.psi.pnq2.redhat.com
+        authentication:
+          sigv4: {}
+        headers:
+        - key: Authorization
+          value: Bearer {{args.api-token}}
+        insecure: true
+        query: |
+          sum(haproxy_backend_http_responses_total{exported_namespace='argo-rollouts', route="route-rollouts-example", code="2xx"})
+    successCondition: len(result) == 0 || result[0] >= 0.95
