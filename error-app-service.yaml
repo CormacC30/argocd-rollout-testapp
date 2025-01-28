@@ -1,7 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: error-app-service
+  labels:
+    app: error-app
+  name: error-app
   namespace: argo-rollouts # argotestapp
 spec:
   selector:
@@ -10,3 +12,26 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
+      name: metrics # web
+
+---
+
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+  name: route-rollouts-example
+  namespace: argo-rollouts
+spec:
+  host: route-rollouts-example-argo-rollouts.apps.27e680a147dbcec5e3f4.hypershift.aws-2.ci.openshift.org # as a variable
+  path: /health
+  port:
+    targetPort: metrics
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: error-app
+    weight: 100
+  wildcardPolicy: None

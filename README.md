@@ -29,11 +29,6 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
      oc label namespace <namespace> openshift.io/cluster-monitoring=true
      ```
 
-   - Apply resources to install operator: 
-
-     ```
-     oc apply -f gitops-operator-group.yaml
-     ```
   
    - For a namespace-scoped argo rollouts installation:
     https://docs.openshift.com/gitops/1.14/argo_rollouts/enable-support-for-namespace-scoped-argo-rollouts-installation.html
@@ -44,16 +39,7 @@ This is a simple application that runs in an OpenShift Cluster, to test Argo Rol
    
    Check if all pods ar running successfully and `$ cd .. ` to parent directory
 
-3. In analysis template change the prometheus query address to one for the required environment.
-   Run the following commands:
-
-```
-oc get route thanos-querier -n openshift-monitoring -o jsonpath='{.spec.host}'
-```
-
-Replace the prometheus addres in `analysisTemplate.yaml` in `.spec.metrics.provider.prometheus.address`
-
-4. In **argo-rollouts-testapp root directory**,  apply each of the YAML manifests `oc apply -f .`
+3. In **argo-rollouts-testapp root directory**,  apply each of the YAML manifests `oc apply -f .`
 
 - The "healthy" app (which generates 200 status code) can has the following image: 
 

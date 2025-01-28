@@ -9,7 +9,7 @@ spec:
     valueFrom:
       secretKeyRef:
         key: token
-        name: argo-rollouts-token
+        name: secret-sa-token # argo-rollouts-token
   metrics:
   - count: 5
     failureCondition: result[0] < 0.05
@@ -17,7 +17,7 @@ spec:
     name: error-rate-analysis
     provider:
       prometheus:
-        address: https://thanos-querier-openshift-monitoring.apps.argotest.lab.psi.pnq2.redhat.com
+        address: https://prometheus-k8s.openshift-monitoring.svc.cluster.local:9091/ 
         authentication:
           sigv4: {}
         headers:
@@ -25,5 +25,5 @@ spec:
           value: Bearer {{args.api-token}}
         insecure: true
         query: |
-          sum(haproxy_backend_http_responses_total{exported_namespace='argo-rollouts', route="route-rollouts-example", code="2xx"})
+          sum(haproxy_backend_http_responses_total{exported_namespace='argo-rollouts', route="route-recent-kingfisher", code!="5**"})
     successCondition: len(result) == 0 || result[0] >= 0.95
