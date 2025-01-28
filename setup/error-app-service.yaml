@@ -23,7 +23,7 @@ metadata:
   name: route-rollouts-example
   namespace: argo-rollouts
 spec:
-  host: route-rollouts-example-argo-rollouts.apps.27e680a147dbcec5e3f4.hypershift.aws-2.ci.openshift.org # as a variable
+  host: route-rollouts-example-argo-rollouts.<ingress-domain> # ingress domain as a variable
   path: /health
   port:
     targetPort: metrics

@@ -1,9 +1,0 @@
-apiVersion: argoproj.io/v1alpha1
-kind: RolloutManager
-metadata:
-  name: argo-rollout-rm
-  namespace: argo-rollouts
-  labels:
-    example: basic
-spec: 
-  namespaceScoped: true

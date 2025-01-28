@@ -25,5 +25,5 @@ spec:
           value: Bearer {{args.api-token}}
         insecure: true
         query: |
-          sum(haproxy_backend_http_responses_total{exported_namespace='argo-rollouts', route="route-recent-kingfisher", code!="5**"})
+          sum(haproxy_backend_http_responses_total{exported_namespace='argo-rollouts', route="route-rollouts-example", code!="5**"})
     successCondition: len(result) == 0 || result[0] >= 0.95

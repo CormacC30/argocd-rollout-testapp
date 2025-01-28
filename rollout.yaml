@@ -31,7 +31,7 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: error-app
-          image: quay.io/rhn-support-ccostell/test-training/healthy-app:v7 # quay.io/rhn-support-ccostell/test-training/error-app:v4 # quay.io/rhn-support-ccostell/test-training/healthy-app:v7 
+          image: quay.io/rhn-support-ccostell/test-training/error-app:v4 # quay.io/rhn-support-ccostell/test-training/error-app:v4 # quay.io/rhn-support-ccostell/test-training/healthy-app:v4 
           readinessProbe:
             httpGet:
               path: /health 
