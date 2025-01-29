@@ -29,3 +29,11 @@ chmod +x script.sh
 ```
 
 6. To test healthy or error-prone apps, execute script again and choose appropriate option.
+
+7. Monitor rollout progress with:
+
+```
+oc argo rollouts get rollout error-app-rollout --watch
+```
+
+8. To start a new rollout, rerun script.sh
