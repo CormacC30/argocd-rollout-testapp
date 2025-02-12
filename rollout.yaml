@@ -4,7 +4,7 @@ metadata:
   name: error-app-rollout
   namespace: argo-rollouts
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       app: error-app
